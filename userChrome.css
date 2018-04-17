@@ -1,0 +1,132 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* ================================================================================
+ * [Firefox] Address bar as title bar
+ * Remove the title bar on a Mac and replaced it with address bar.
+ */
+
+#main-window[tabsintitlebar=true] #titlebar-buttonbox-container {
+    margin-top: 8px;
+}
+
+#main-window[tabsintitlebar=true] #nav-bar {
+    padding-left: 75px;
+}
+
+#main-window[tabsintitlebar=true][inFullscreen] #nav-bar,
+#main-window[tabsintitlebar=true][chromehidden*="toolbar"] #nav-bar,
+#main-window[tabsintitlebar=true][customizing=true] #nav-bar {
+    padding-left: 0;
+}
+
+#main-window[tabsintitlebar=true][uidensity="compact"] #nav-bar {
+    height: 37px;
+}
+
+#main-window[tabsintitlebar=true][inFullscreen] #titlebar-buttonbox-container,
+#main-window[tabsintitlebar=true][chromehidden*="toolbar"] #titlebar-buttonbox-container,
+#main-window[tabsintitlebar=true][customizing=true] #titlebar-buttonbox-container {
+    margin-top: 0;
+}
+
+#main-window[tabsintitlebar=true][uidensity="compact"][inFullscreen] #nav-bar,
+#main-window[tabsintitlebar=true][uidensity="compact"][chromehidden*="toolbar"] #nav-bar {
+    height: auto;
+}
+
+#main-window[tabsintitlebar=true][privatebrowsingmode="temporary"] #nav-bar {
+    padding-right: 40px;
+}
+
+#main-window[tabsintitlebar=true][privatebrowsingmode="temporary"] #titlebar-secondary-buttonbox {
+    position: relative !important;
+}
+
+#main-window[tabsintitlebar=true][privatebrowsingmode="temporary"] #titlebar-secondary-buttonbox .private-browsing-indicator {
+    margin-top: -8px;
+    position: absolute !important;
+    right: 0;
+    top: 50%;
+}
+
+/* ================================================================================
+ * Firefox: remove tab bar
+ * Hide the top tab bar.
+ */
+
+#TabsToolbar {
+    min-height: 0px !important;
+}
+
+#TabsToolbar .private-browsing-indicator {
+    display: none;
+}
+
+#TabsToolbar #tabbrowser-tabs {
+    visibility: collapse !important;
+}
+
+/* ================================================================================
+ * Tab Center Redux: auto-hide sidebar
+ * Implements Tab Center-style auto-hide sidebar.
+ */
+
+:root {
+    --tab-center-redux-sidebar-minimize: 4vw;
+    --tab-center-redux-sidebar-maximize: 20vw;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] {
+    border-right: 1px solid #0c0c0d;
+    max-width: var(--tab-center-redux-sidebar-minimize);
+    min-width: var(--tab-center-redux-sidebar-minimize);
+    overflow: hidden;
+    position: fixed;
+    transition: all 0.2s ease;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"]::before {
+    border-right: 1px solid var(--toolbox-border-bottom-color);
+    box-shadow: inset -3px -3px 3px rgba(0, 0, 0, 0.05);
+    content: "\a0";
+    height: calc(100vh - var(--tab-min-height));
+    max-width: var(--tab-center-redux-sidebar-minimize);
+    min-width: var(--tab-center-redux-sidebar-minimize);
+    pointer-events: none;
+    position: fixed;
+    transition: all 0.2s ease;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"]:hover::before {
+    max-width: var(--tab-center-redux-sidebar-maximize);
+    min-width: var(--tab-center-redux-sidebar-maximize);
+    box-shadow: none;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"]:hover ,
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] #sidebar-header,
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] #sidebar {
+    max-width: var(--tab-center-redux-sidebar-maximize) !important;
+    min-width: var(--tab-center-redux-sidebar-maximize) !important;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] #sidebar-header,
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] #sidebar-splitter {
+    display: none;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] #sidebar {
+    height: calc(100vh - var(--tab-min-height));
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"]:not([hidden="true"]) ~ #sidebar-splitter ~ #appcontent {
+    margin-left: var(--tab-center-redux-sidebar-minimize);
+}
+
+#main-window[chromehidden*="toolbar"] #appcontent {
+    margin-left: 0 !important;
+}
+
+#main-window[inFullscreen] #sidebar {
+    height: 100vh;
+}
