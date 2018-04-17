@@ -49,6 +49,10 @@
     top: 50%;
 }
 
+#main-window[tabsintitlebar=true][inFullscreen][privatebrowsingmode="temporary"] #nav-bar {
+    padding-right: 0;
+}
+
 /* ================================================================================
  * Firefox: remove tab bar
  * Hide the top tab bar.
